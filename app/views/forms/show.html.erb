@@ -1,0 +1,42 @@
+<div class="flex flex-col gap-6 w-full sm:w-1/2 mx-auto">
+  <%= link_to "< Back", forms_path, class: "w-fit font-semibold text-sm" %>
+  <div class="flex w-full justify-between items-center">
+    <h1 class="text-2xl font-bold"><%= @form.name%></h1>
+    <div class="flex gap-6">
+      <%= form_with(model: Version.new, url: form_versions_path(@form)) do |f| %>
+        <%= f.hidden_field :name, value: "v 0.0.3" %>
+        <%= f.submit "+ New Version", class: "py-2 px-4 bg-blue-600 rounded-lg hover:bg-blue-700 cursor-pointer text-white" %>
+      <% end %>
+      <div data-controller="dropdown" class="relative z-10 bg-white">
+        <button type="button" class="w-[7rem] flex justify-center items-center rounded-lg border border-b-gray-300 py-2 px-4" data-action="dropdown#toggle click@window->dropdown#hide">
+          <%= @version.name %>
+        </button>
+        <div
+        data-dropdown-target="menu"
+        class="w-full bg-white hidden transition transform origin-top-right absolute right-0 pt-2 border-x border-b border-gray-300 rounded-b-lg"
+        data-transition-enter-from="opacity-0 scale-95"
+        data-transition-enter-to="opacity-100 scale-100"
+        data-transition-leave-from="opacity-100 scale-100"
+        data-transition-leave-to="opacity-0 scale-95"
+      >
+          <% @form.versions.each do |version| %>
+            <%= link_to version.name, 
+                      form_path(@form, version: version.id), 
+                      class: "w-full inline-block py-2 px-4 hover:bg-gray-200 transition w-full h-full rounded-lg", 
+                      data: { action: "dropdown#toggle" } %>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="relative rounded-lg p-4 border border-gray-300 pt-8 mb-8">
+    <div class="absolute -top-4 w-fit px-2 bg-white text-lg font-bold">
+      Questions
+    </div>
+    <%= form_with(model: @form) do |f|  %>
+      <% @version.questions.each_with_index do |question, idx| %>
+        <%= render "question", q: question, idx:, f: %>
+      <% end %>
+    <% end %>
+  </div>
+</div>

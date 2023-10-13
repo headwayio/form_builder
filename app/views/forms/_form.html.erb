@@ -1,0 +1,13 @@
+<%= form.fields_for :versions, @form.latest || @form.versions.new  do |ff| %>
+  <div class="w-full flex gap-4 mb-4">
+    <%= form.text_field :name, class: "grow disabled:cursor-not-allowed", disabled: @form.persisted?, placeholder: "Enter form name...", required: true %>
+    <%= ff.text_field :name, class: "max-w-[5rem]", placeholder: "v 0.0.1", required: true %>
+    <%= ff.hidden_field :id %>
+  </div>
+
+  <%= dynamic_fields_for ff, :questions, "Add Questions" do |ff| %>
+    <%= render "field_creation", form: ff %>
+  <% end %>
+<% end %>
+
+<%= form.submit :Save, class: "cursor-pointer p-4 bg-blue-600 text-white hover:bg-blue-700 transition rounded-lg my-4 w-full" %>

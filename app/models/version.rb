@@ -17,5 +17,12 @@
 #  fk_rails_...  (form_id => forms.id)
 #
 class Version < ApplicationRecord
+  validates :name, presence: true
+  
   belongs_to :form
+  has_many :questions, dependent: :destroy
+
+  default_scope { order(created_at: :desc) }
+
+  accepts_nested_attributes_for :questions, reject_if: :all_blank, allow_destroy: true
 end

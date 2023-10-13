@@ -1,0 +1,24 @@
+<li class="relative my-6 p-4 border border-[#0004] rounded-lg" data-controller="nested-form dynamic-form" data-nested-form-wrapper-selector-value=".nested-form-wrapper" data-sortable-update-url="<%= form.object.id ? question_path(form.object) : forms_path %>">
+  <%= form.hidden_field :id %>
+  <h3 class="absolute -top-3.5 bg-white text-lg font-semibold px-2">Question</h3>
+  <div class="flex gap-6 w-full items-center justify-between mb-4">
+    <%= form.text_field :text, placeholder: "Question here...", required: true %>
+    <%= form.select :input_type, 
+                    Question.input_types.keys.map { |k| [k.titleize, k] }, 
+                    {}, 
+                    data: { 
+                      dynamic_form_target: "selector", 
+                      action: "change->dynamic-form#toggleOptions" 
+                    } %>
+    <div class="flex flex-col items-center ml-4">
+      <%= form.label :required, "Required?", class: "text-sm pb-1 uppercase font-semibold" %>
+      <%= form.check_box :required %>
+    </div>
+  </div>
+  <div class="hidden max-w-[600px]" data-dynamic-form-target="options">
+    <%= render "options", form:, q: form.object %>
+    <div data-nested-form-target="target"></div>
+
+    <button type="button" class="border border-[#0003] rounded-lg px-4 py-2" data-action="nested-form#add">Add option</button>
+  </div>
+</li>

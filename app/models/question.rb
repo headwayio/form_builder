@@ -3,9 +3,11 @@
 # Table name: questions
 #
 #  id         :bigint           not null, primary key
+#  input_type :integer
 #  metadata   :jsonb
+#  position   :integer          not null
+#  required   :boolean          default(FALSE), not null
 #  text       :string
-#  type       :integer
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
 #  version_id :bigint           not null
@@ -18,21 +20,27 @@
 #
 #  fk_rails_...  (version_id => versions.id)
 #
-class Question < ApplicationRecord
-  enum type: {
-    0: :text_field,
-    1: :number_field,
-    2: :email_field,
-    3: :phone_field,
-    4: :text_area,
-    5: :select,
-    6: :radio_buttons,
-    7: :checkboxes,
-    8: :date,
-    9: :time
-  }
+class Question < ApplicationRecord  
+  acts_as_list scope: :version
+  
+  store :metadata, accessors: [:options, :grid]
 
-  validates :text, :type, presence: true
+  enum :input_type, {
+    text_field: 0,
+    number_field: 1,
+    email_field: 2,
+    phone_field: 3,
+    text_area: 4,
+    select: 5,
+    radio_buttons: 6,
+    checkboxes: 7,
+    date: 8,
+    time: 9
+  }, prefix: :input_type
+
+  validates :text, :input_type, presence: true
 
   belongs_to :version
+
+  default_scope { order(position: :asc) }
 end

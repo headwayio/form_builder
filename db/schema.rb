@@ -31,8 +31,10 @@ ActiveRecord::Schema[7.0].define(version: 2023_10_11_014739) do
 
   create_table "questions", force: :cascade do |t|
     t.string "text"
-    t.integer "type"
-    t.jsonb "metadata"
+    t.integer "input_type"
+    t.jsonb "metadata", default: {}
+    t.boolean "required", default: false, null: false
+    t.integer "position", null: false
     t.bigint "version_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false

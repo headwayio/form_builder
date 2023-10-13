@@ -1,0 +1,16 @@
+<div class="w-3/4 mx-auto">
+  <div class="flex w-full justify-between items-center mb-8">
+    <h1 class="text-2xl font-bold">Forms</h1>
+    <%= link_to "+", new_form_path, class: "h-10 w-10 flex justify-center items-center rounded-full bg-blue-600 hover:bg-blue-700 font-bold text-white" %>
+  </div>
+  <% Form.all.each do |form| %>
+    <div class="my-4 pb-2 border-b-2 last:border-b-0 border-[#0003]">
+      <%= link_to form_path(form), class: "w-full h-full" do %>
+        <h3 class="text-lg font-semibold">
+          <%= form.name %>
+        </h3>
+        <p class="text-base font-thin"><%= form.latest.name %></p>
+      <% end %>
+    </div>
+  <% end %>
+</div>

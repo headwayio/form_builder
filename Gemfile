@@ -48,6 +48,8 @@ gem "bootsnap", require: false
 gem "view_component"
 gem 'view_component-form'
 
+gem 'acts_as_list'
+
 # Use Sass to process CSS
 # gem "sassc-rails"
 
@@ -64,6 +66,11 @@ group :development do
   gem "web-console"
 
   gem 'annotate'
+
+  gem "better_errors"
+  gem "binding_of_caller"
+  gem "pry"
+  gem "byebug"
 
   # Add speed badges [https://github.com/MiniProfiler/rack-mini-profiler]
   # gem "rack-mini-profiler"

@@ -1,0 +1,7 @@
+<% q.options&.each do |option| %>
+  <%= form.text_field :options, value: option, multiple: true, class: "mb-4" %>
+<% end %>
+
+<template data-nested-form-target="template">
+  <%= form.text_field :options, value: "", multiple: true, class: "mb-4" %>
+</template>
