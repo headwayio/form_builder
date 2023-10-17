@@ -1,23 +1,23 @@
 <div class="w-full my-4">
   <h3 class="text-lg font-semibold mb-2"><%= "#{idx + 1}. #{q.text}" %></h3>
   <% if q.input_type_text_field? %>
-    <%= f.text_field :text %>
+    <%= f.text_field :text, required: q.required? %>
   <% elsif q.input_type_number_field? %>
-    <%= f.number_field :text, min: 0 %>
+    <%= f.number_field :text, min: 0, required: q.required? %>
   <% elsif q.input_type_email_field? %>
-    <%= f.email_field :text, placeholder: "yoda@starwars.net" %>
+    <%= f.email_field :text, required: q.required?, placeholder: "yoda@starwars.net" %>
   <% elsif q.input_type_phone_field? %>
-    <%= f.text_field :text, placeholder: "(888) 467-5305", data: { controller: "phone-number-formatter", action: "phone-number-formatter#format:prevent" } %>
+    <%= f.text_field :text, required: q.required?, placeholder: "(888) 467-5305", data: { controller: "phone-number-formatter", action: "phone-number-formatter#format:prevent" } %>
   <% elsif q.input_type_text_area? %>
-    <%= f.text_area :text %>
+    <%= f.text_area :text, required: q.required? %>
   <% elsif q.input_type_select? %>
-    <%= f.select :text, q.options %>
-  <% elsif q.input_type_radio_buttons? %>
+    <%= f.select :text, q.options, required: q.required? %>
+  <% elsif q.input_type_radio_buttons? && q.parent_id.blank? %>
     <div class="flex gap-2 items-center">
       <% q.options.each do |option| %>
         <div class="mr-4 last:ml-0">
           <%= f.label :text, option %>
-          <%= f.radio_button :text, option %>
+          <%= f.radio_button :text, option, required: q.required? %>
         </div>
       <% end %>
     </div>
@@ -31,8 +31,33 @@
       <% end %>
     </div>
   <% elsif q.input_type_date? %>
-    <%= f.date_field :text %>
+    <%= f.date_field :text, required: q.required? %>
   <% elsif q.input_type_time? %>
-    <%= f.time_field :text %>
+    <%= f.time_field :text, required: q.required? %>
+  <% elsif q.input_type_file? %>
+    <%= f.file_field :text, required: q.required? %>
+  <% elsif q.input_type_radio_grid? %>
+    <table class="w-full">
+      <thead>
+        <th></th>
+        <% q.columns.each do |column| %>
+          <th><%= column %></th>
+        <% end %>
+      </thead>
+      <tbody>
+        <%= f.fields_for :questions, q do |ff| %>
+          <%= ff.fields_for :children, q.children do |fff| %>
+            <tr>
+              <td class="py-2 pl-2 w-2 whitespace-nowrap font-semibold"><%= fff.object.text %></td>
+              <% q.columns.each do |column| %>
+                <td class="text-center">
+                  <%= fff.radio_button :text, column %>
+                </td>
+              <% end %>
+            </tr>
+          <% end %>
+        <% end %>
+      </tbody>
+    </table>
   <% end %>
 </div>

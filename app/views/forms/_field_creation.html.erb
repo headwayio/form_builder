@@ -1,4 +1,4 @@
-<li class="relative my-6 p-4 border border-[#0004] rounded-lg" data-controller="nested-form dynamic-form" data-nested-form-wrapper-selector-value=".nested-form-wrapper" data-sortable-update-url="<%= form.object.id ? question_path(form.object) : forms_path %>">
+<li class="relative my-6 p-4 border border-[#0004] rounded-lg" data-controller="dynamic-form" data-sortable-update-url="<%= form.object.id ? question_path(form.object) : forms_path %>">
   <%= form.hidden_field :id %>
   <h3 class="absolute -top-3.5 bg-white text-lg font-semibold px-2">Question</h3>
   <div class="flex gap-6 w-full items-center justify-between mb-4">
@@ -8,17 +8,23 @@
                     {}, 
                     data: { 
                       dynamic_form_target: "selector", 
-                      action: "change->dynamic-form#toggleOptions" 
+                      action: "change->dynamic-form#toggleOptionalFields" 
                     } %>
-    <div class="flex flex-col items-center ml-4">
-      <%= form.label :required, "Required?", class: "text-sm pb-1 uppercase font-semibold" %>
-      <%= form.check_box :required %>
+    <div class="flex flex-col items-center ml-4 text-sm pb-1 uppercase font-semibold">
+      <span class="ml-3 text-sm font-medium text-gray-900 dark:text-gray-300">Required?</span>
+      <label class="relative inline-flex items-center cursor-pointer">
+        <%= form.check_box :required, class: "sr-only peer" %>
+        <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600"></div>
+      </label>
     </div>
+    <%= heroicon "ellipsis-vertical", options: { class: "h-16 cursor-pointer" } %>
   </div>
-  <div class="hidden max-w-[600px]" data-dynamic-form-target="options">
-    <%= render "options", form:, q: form.object %>
-    <div data-nested-form-target="target"></div>
+  <label class="relative inline-flex items-center cursor-pointer">
+    <input type="checkbox" value="" class="sr-only peer" data-action="change->dynamic-form#toggleChildren">
+    <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600"></div>
+    <span class="ml-3 text-sm font-medium text-gray-900 dark:text-gray-300">Follow up question?</span>
+  </label>
 
-    <button type="button" class="border border-[#0003] rounded-lg px-4 py-2" data-action="nested-form#add">Add option</button>
-  </div>
+  <%= render "optional_options", form:, q: form.object %>
+  <%= render "optional_grid", form:, q: form.object %>
 </li>

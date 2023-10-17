@@ -1,0 +1,6 @@
+<div class="hidden max-w-[600px]" data-controller="nested-form" data-nested-form-wrapper-selector-value=".nested-form-wrapper" data-dynamic-form-target="children">
+  <%= render "children", form:, q: form.object %>
+  <div data-nested-form-target="target"></div>
+
+  <button type="button" class="border border-[#0003] rounded-lg px-4 py-2" data-action="nested-form#add">Add another sub question</button>
+</div>

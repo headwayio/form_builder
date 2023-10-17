@@ -1,0 +1,22 @@
+<div data-controller="nested-form" data-nested-form-wrapper-selector-value=".nested-form-wrapper">
+  <p class="text-lg font-semibold">Rows</p>
+
+  <%= form.fields_for :children do |ff| %>
+    <%= ff.hidden_field :id %>
+    <%= ff.hidden_field :input_type, value: :radio_buttons %>
+
+    <%= ff.text_field :text, value: ff.object.text, class: "mb-4" %>
+  <% end %>
+  <%= form.fields_for :children, form.object.children.new do |ff| %>
+
+    <div data-nested-form-target="target"></div>
+
+    <template data-nested-form-target="template">
+      <%= ff.hidden_field :input_type, value: :radio_buttons %>
+
+      <%= ff.text_field :text, value: "", class: "mb-4" %>
+    </template>
+
+    <button type="button" class="border border-[#0003] rounded-lg px-4 py-2" data-action="nested-form#add">Add Row</button>
+  <% end %>
+</div>

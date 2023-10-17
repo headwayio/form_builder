@@ -1,0 +1,9 @@
+<% form.fields_for :children do |ff| %>
+  <%= ff.text_field :text, class: "mb-4" %>
+<% end %>
+
+<% form.fields_for :children, form.object.children.new do |ff| %>
+  <template data-nested-form-target="template">
+    <%= form.text_field :text, value: "", class: "mb-4" %>
+  </template>
+<% end %>

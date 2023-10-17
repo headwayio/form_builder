@@ -44,9 +44,21 @@ class FormsController < ApplicationController
                               :id,
                               :name,
                               :_destroy,
-                              questions_attributes: [:id, :_destroy, :text, :input_type, :required, options: []]
+                              questions_attributes: [
+                                *question_attributes,
+                                options: [],
+                                columns: [],
+                                children_attributes: [
+                                  :version_id,
+                                  *question_attributes
+                                ]
+                              ]
                             ], 
                             
                           )
+  end
+
+  def question_attributes
+    %i(id _destroy text input_type required)
   end
 end
