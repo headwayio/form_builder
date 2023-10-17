@@ -4,13 +4,14 @@
     <%= link_to "+", new_form_path, class: "h-10 w-10 flex justify-center items-center rounded-full bg-blue-600 hover:bg-blue-700 font-bold text-white" %>
   </div>
   <% Form.all.each do |form| %>
-    <div class="my-4 pb-2 border-b-2 last:border-b-0 border-[#0003]">
+    <div class="flex flex-col gap-4 my-4 pb-2 border-b-2 last:border-b-0 border-[#0003]">
       <%= link_to form_path(form), class: "w-full h-full" do %>
         <h3 class="text-lg font-semibold">
           <%= form.name %>
         </h3>
         <p class="text-base font-thin"><%= form.latest.name %></p>
       <% end %>
+      <%= link_to "Start FQ", new_form_response_path(form), class: "w-fit py-2 px-4 rounded-lg transition border border-blue-600 hover:bg-blue-700 text-blue-700 hover:text-white transition" %>
     </div>
   <% end %>
 </div>

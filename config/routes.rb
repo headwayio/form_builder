@@ -1,6 +1,7 @@
 Rails.application.routes.draw do
   resources :forms do
     resources :versions, only: [:create, :destroy]
+    resources :responses
   end
 
   resources :questions, only: [:update]
