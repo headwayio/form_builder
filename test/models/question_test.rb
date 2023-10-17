@@ -2,23 +2,16 @@
 #
 # Table name: questions
 #
-#  id         :bigint           not null, primary key
-#  input_type :integer
-#  metadata   :jsonb
-#  position   :integer          not null
-#  required   :boolean          default(FALSE), not null
-#  text       :string
-#  created_at :datetime         not null
-#  updated_at :datetime         not null
-#  version_id :bigint           not null
-#
-# Indexes
-#
-#  index_questions_on_version_id  (version_id)
-#
-# Foreign Keys
-#
-#  fk_rails_...  (version_id => versions.id)
+#  id          :bigint           not null, primary key
+#  input_type  :integer
+#  metadata    :jsonb
+#  parent_type :string
+#  position    :integer          not null
+#  required    :boolean          default(FALSE), not null
+#  text        :string
+#  created_at  :datetime         not null
+#  updated_at  :datetime         not null
+#  parent_id   :integer
 #
 require "test_helper"
 

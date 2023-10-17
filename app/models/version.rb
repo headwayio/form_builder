@@ -20,7 +20,8 @@ class Version < ApplicationRecord
   validates :name, presence: true
   
   belongs_to :form
-  has_many :questions, dependent: :destroy
+  has_many :questions, as: :parent, dependent: :destroy
+  has_many :responses, dependent: :destroy
 
   default_scope { order(created_at: :desc) }
 

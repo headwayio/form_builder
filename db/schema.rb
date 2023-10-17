@@ -10,17 +10,19 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_10_11_014739) do
+ActiveRecord::Schema[7.0].define(version: 2023_10_16_184415) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
   create_table "answers", force: :cascade do |t|
     t.string "text"
     t.jsonb "metadata"
-    t.bigint "version_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["version_id"], name: "index_answers_on_version_id"
+    t.bigint "response_id"
+    t.bigint "question_id"
+    t.index ["question_id"], name: "index_answers_on_question_id"
+    t.index ["response_id"], name: "index_answers_on_response_id"
   end
 
   create_table "forms", force: :cascade do |t|
@@ -35,10 +37,18 @@ ActiveRecord::Schema[7.0].define(version: 2023_10_11_014739) do
     t.jsonb "metadata", default: {}
     t.boolean "required", default: false, null: false
     t.integer "position", null: false
-    t.bigint "version_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["version_id"], name: "index_questions_on_version_id"
+    t.integer "parent_id"
+    t.string "parent_type"
+  end
+
+  create_table "responses", force: :cascade do |t|
+    t.bigint "version_id", null: false
+    t.datetime "submited_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["version_id"], name: "index_responses_on_version_id"
   end
 
   create_table "versions", force: :cascade do |t|
@@ -49,7 +59,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_10_11_014739) do
     t.index ["form_id"], name: "index_versions_on_form_id"
   end
 
-  add_foreign_key "answers", "versions"
-  add_foreign_key "questions", "versions"
+  add_foreign_key "responses", "versions"
   add_foreign_key "versions", "forms"
 end
