@@ -49,6 +49,7 @@ gem "view_component"
 gem 'view_component-form'
 
 gem 'acts_as_list'
+gem "heroicon"
 
 # Use Sass to process CSS
 # gem "sassc-rails"
@@ -71,6 +72,7 @@ group :development do
   gem "binding_of_caller"
   gem "pry"
   gem "byebug"
+  gem 'rails-erd'
 
   # Add speed badges [https://github.com/MiniProfiler/rack-mini-profiler]
   # gem "rack-mini-profiler"
