@@ -2,29 +2,7 @@
   <h3 class="text-lg font-semibold mb-2"><%= "#{q.text}" %></h3>
   <%= f.hidden_field :id %>
   <%= f.hidden_field :question_id %>
-  <% if q.input_type_text_field? %>
-    <%= f.text_field :text, required: q.required? %>
-  <% elsif q.input_type_number_field? %>
-    <%= f.number_field :text, min: 0, required: q.required? %>
-  <% elsif q.input_type_email_field? %>
-    <%= f.email_field :text, required: q.required?, placeholder: "yoda@starwars.net" %>
-  <% elsif q.input_type_phone_field? %>
-    <%= f.text_field :text, required: q.required?, placeholder: "(888) 467-5305", data: { controller: "phone-number-formatter", action: "phone-number-formatter#format:prevent" } %>
-  <% elsif q.input_type_text_area? %>
-    <%= f.text_area :text, required: q.required? %>
-  <% elsif q.input_type_select? %>
-    <%= f.select :text, q.options, required: q.required? %>
-  <% elsif q.input_type_radio_buttons? %>
-    <%= render "display_form/radio_buttons", q:, children:, f: %>
-  <% elsif q.input_type_checkboxes? %>
-    <%= render "display_form/checkboxes", q:, children:, f: %>
-  <% elsif q.input_type_date? %>
-    <%= f.date_field :text, required: q.required? %>
-  <% elsif q.input_type_time? %>
-    <%= f.time_field :text, required: q.required? %>
-  <% elsif q.input_type_file? %>
-    <%= f.file_field :text, required: q.required? %>
-  <% elsif q.input_type_radio_grid? %>
-    <%= render "display_form/radio_grid", q:, children:, f: %>
-  <% end %>
+
+  <%# This matches the Question model input type to a partial in display_form %>
+  <%= render "display_form/#{q.input_type}", q:, children:, f: %>
 </div>

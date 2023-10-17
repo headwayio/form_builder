@@ -1,0 +1,21 @@
+<table class="w-full">
+  <thead>
+    <th></th>
+    <% q.columns.each do |column| %>
+      <th><%= column %></th>
+    <% end %>
+  </thead>
+  <tbody>
+    <%= f.options[:parent_builder].fields_for :answers, children do |ff| %>
+      <tr class="even:bg-slate-50">
+        <td class="py-2 pl-2 w-2 whitespace-nowrap font-semibold"><%= ff.object.question.text %></td>
+        <% q.columns.each do |column| %>
+          <td class="text-center">
+            <%= ff.hidden_field :question_id %>
+            <%= ff.radio_button :text, column %>
+          </td>
+        <% end %>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

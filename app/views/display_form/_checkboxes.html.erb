@@ -1,0 +1,8 @@
+<div class="flex gap-2 items-center">
+  <% q.options.each do |option| %>
+    <div class="mr-4 last:ml-0">
+      <%= f.label :text, option %>
+      <%= f.check_box :text, {}, option %>
+    </div>
+  <% end %>
+</div>
