@@ -1,6 +1,6 @@
 <div data-controller="nested-form" data-nested-form-wrapper-selector-value=".nested-form-wrapper">
   <p class="text-lg font-semibold">Columns</p>
-  <% q.columns&.each do |column| %>
+  <% q&.columns&.each do |column| %>
     <%= form.text_field :columns, value: column, multiple: true, class: "mb-4" %>
   <% end %>
   <div data-nested-form-target="target"></div>

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_10_16_184415) do
+ActiveRecord::Schema[7.0].define(version: 2023_10_18_025914) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -51,8 +51,17 @@ ActiveRecord::Schema[7.0].define(version: 2023_10_16_184415) do
     t.index ["version_id"], name: "index_responses_on_version_id"
   end
 
-  create_table "versions", force: :cascade do |t|
+  create_table "sections", force: :cascade do |t|
     t.string "name"
+    t.integer "position", null: false
+    t.bigint "version_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["version_id"], name: "index_sections_on_version_id"
+  end
+
+  create_table "versions", force: :cascade do |t|
+    t.integer "name"
     t.bigint "form_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -60,5 +69,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_10_16_184415) do
   end
 
   add_foreign_key "responses", "versions"
+  add_foreign_key "sections", "versions"
   add_foreign_key "versions", "forms"
 end

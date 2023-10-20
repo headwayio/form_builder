@@ -20,5 +20,11 @@ class Response < ApplicationRecord
   belongs_to :version
   has_many :answers, dependent: :destroy
 
-  accepts_nested_attributes_for :answers, reject_if: :all_blank
+  accepts_nested_attributes_for :answers, reject_if: :reject_answer?
+
+  private
+
+  def reject_answer?(attr)
+    attr['text'].blank? && Question.includes(:children).find(attr['question_id']).children.present?
+  end
 end

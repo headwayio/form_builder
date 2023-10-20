@@ -44,13 +44,16 @@ class FormsController < ApplicationController
                               :id,
                               :name,
                               :_destroy,
-                              questions_attributes: [
-                                *question_attributes,
-                                options: [],
-                                columns: [],
-                                children_attributes: [
-                                  :version_id,
-                                  *question_attributes
+                              sections_attributes: [
+                                :id,
+                                :name,
+                                questions_attributes: [
+                                  *question_attributes,
+                                  options: [],
+                                  columns: [],
+                                  children_attributes: [
+                                    *question_attributes
+                                  ]
                                 ]
                               ]
                             ], 

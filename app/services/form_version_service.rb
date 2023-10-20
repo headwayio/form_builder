@@ -5,27 +5,28 @@ class FormVersionService < ApplicationService
   
   def call
     @prev_version = form.latest
-    @new_version = form.versions.create(name: bump_version_number)
+    @new_version = form.versions.create(name: @prev_version.name + 1)
 
-    copy_questions if @new_version
+    copy_sections if @new_version
 
     @new_version
   end
 
   private
 
-  def copy_questions
-    @prev_version.questions.each do |q|
-      @new_version.questions.create(q.attributes.merge({id: nil}))
+  def copy_sections
+    @prev_version.sections.each do |section|
+      @prev_section = section
+      @new_section = @new_version.sections.create(section.attributes.merge({id: nil}))
+      
+      copy_questions
     end
   end
 
-  def bump_version_number
-    letter, number = @prev_version.name.split(" ")
-    version_array = number.split(".")
-    version_array[-1] = (version_array[-1].to_i + 1).to_s
-
-    [letter, version_array.join(".")].join(" ")
+  def copy_questions
+    @prev_section.questions.each do |q|
+      @new_section.questions.create(q.attributes.merge({id: nil}))
+    end
   end
 
   def form

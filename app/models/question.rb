@@ -43,6 +43,4 @@ class Question < ApplicationRecord
   has_many :children, class_name: 'Question', as: :parent, dependent: :destroy
 
   accepts_nested_attributes_for :children, reject_if: :all_blank, allow_destroy: true 
-
-  default_scope { order(position: :asc) }
 end

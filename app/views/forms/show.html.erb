@@ -8,7 +8,8 @@
         <%= f.submit "+ New Version", class: "py-2 px-4 bg-blue-600 rounded-lg hover:bg-blue-700 cursor-pointer text-white" %>
       <% end %>
       <div data-controller="dropdown" class="relative z-10 bg-white">
-        <button type="button" class="w-[7rem] flex justify-center items-center rounded-lg border border-b-gray-300 py-2 px-4" data-action="dropdown#toggle click@window->dropdown#hide">
+        <div class="absolute top-1/2 transform -translate-y-1/2 left-4">v</div>
+        <button type="button" class="w-[7rem] flex rounded-lg border border-b-gray-300 py-2 pl-8" data-action="dropdown#toggle click@window->dropdown#hide">
           <%= @version.name %>
         </button>
         <div
@@ -20,7 +21,7 @@
         data-transition-leave-to="opacity-0 scale-95"
       >
           <% @form.versions.each do |version| %>
-            <%= link_to version.name, 
+            <%= link_to "v #{version.name}", 
                       form_path(@form, version: version.id), 
                       class: "w-full inline-block py-2 px-4 hover:bg-gray-200 transition w-full h-full rounded-lg", 
                       data: { action: "dropdown#toggle" } %>
@@ -29,14 +30,16 @@
       </div>
     </div>
   </div>
-  <div class="relative rounded-lg p-4 border border-gray-300 pt-8 mb-8">
-    <div class="absolute -top-4 w-fit px-2 bg-white text-lg font-bold">
-      Questions
-    </div>
-    <%= form_with(model: @form) do |f|  %>
-      <% @version.questions.each_with_index do |question, idx| %>
-        <%= render "question", q: question, idx:, f: %>
-      <% end %>
+  <%= form_with(model: @form) do |f|  %>
+    <% @version.sections.each do |section| %>
+      <div class="relative rounded-lg p-4 border border-gray-300 pt-8 mb-8">
+        <div class="absolute -top-4 w-fit px-2 bg-white text-lg font-bold">
+          <%= section.name %>
+        </div>
+        <% section.questions.each_with_index do |question, idx| %>
+          <%= render "question", q: question, idx:, f: %>
+        <% end %>
+      </div>
     <% end %>
-  </div>
+  <% end %>
 </div>

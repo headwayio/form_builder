@@ -6,7 +6,8 @@
     <% end %>
   </thead>
   <tbody>
-    <%= f.options[:parent_builder].fields_for :answers, children do |ff| %>
+    <% builder = f.options[:parent_builder] || f %>
+    <%= builder.fields_for :answers, children do |ff| %>
       <tr class="even:bg-slate-50">
         <td class="py-2 pl-2 w-2 whitespace-nowrap font-semibold"><%= ff.object.question.text %></td>
         <% q.columns.each do |column| %>

@@ -1,24 +1,25 @@
 # == Schema Information
 #
-# Table name: versions
+# Table name: sections
 #
 #  id         :bigint           not null, primary key
-#  name       :integer
+#  name       :string
+#  position   :integer          not null
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
-#  form_id    :bigint           not null
+#  version_id :bigint           not null
 #
 # Indexes
 #
-#  index_versions_on_form_id  (form_id)
+#  index_sections_on_version_id  (version_id)
 #
 # Foreign Keys
 #
-#  fk_rails_...  (form_id => forms.id)
+#  fk_rails_...  (version_id => versions.id)
 #
 require "test_helper"
 
-class VersionTest < ActiveSupport::TestCase
+class SectionTest < ActiveSupport::TestCase
   # test "the truth" do
   #   assert true
   # end

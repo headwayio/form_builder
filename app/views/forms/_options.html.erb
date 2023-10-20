@@ -1,4 +1,4 @@
-<% q.options&.each do |option| %>
+<% q&.options&.each do |option| %>
   <%= form.text_field :options, value: option, multiple: true, class: "mb-4" %>
 <% end %>
 

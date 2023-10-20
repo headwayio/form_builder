@@ -1,7 +1,7 @@
 <div data-controller="nested-form" data-nested-form-wrapper-selector-value=".nested-form-wrapper">
   <p class="text-lg font-semibold">Rows</p>
 
-  <%= form.fields_for :children do |ff| %>
+  <%= form.fields_for :children, form.object.children do |ff| %>
     <%= ff.hidden_field :id %>
     <%= ff.hidden_field :input_type, value: :radio_buttons %>
 
